@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sme_fin/src/core/core.dart';
 
+import '../widgets/onboarding_progress_indicator.dart';
+
 class PersonalDetailsPage extends StatefulWidget {
   const PersonalDetailsPage({super.key});
 
@@ -46,6 +48,11 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const OnboardingProgressIndicator(
+                  currentStep: 1,
+                  totalSteps: 3,
+                ),
+                const SizedBox(height: 32),
                 Text(
                   'Personal Details',
                   style: context.textTheme.headlineMedium?.copyWith(
