@@ -12,6 +12,7 @@ dependencies:
 
   # UI
   cupertino_icons: ^1.0.8
+  flutter_native_splash: ^2.4.6
 
   # State Management
   flutter_bloc: ^9.1.1
@@ -45,6 +46,24 @@ dependencies:
 
   # Utils
   intl: ^0.20.2
+
+# Flutter Splash Screen Setup
+#
+# This configuration helps you create a splash screen for your Flutter project.
+#
+# Instructions:
+# 1. Add the following configuration to your pubspec.yaml file.
+# 2. Run the command: fvm dart run flutter_native_splash:create
+# 3. If you make any changes to the splash screen configuration, re-run the command.
+#
+# Current-Configuration:
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#FFFFFF"
+  image: assets/images/splash_logo.png
+  android_12:
+    image: assets/images/splash_logo.png
 
 dev_dependencies:
   flutter_test:
