@@ -1,3 +1,4 @@
 export 'app_constants.dart';
 export 'asset_path.dart';
 export 'validators.dart';
+export 'image_compressor.dart';

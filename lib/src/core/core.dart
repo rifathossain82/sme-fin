@@ -7,3 +7,5 @@ export 'package:sme_fin/src/core/routes/routes.dart';
 export 'package:sme_fin/src/core/di/injection.dart';
 export 'package:sme_fin/src/core/theme/app_theme.dart';
 export 'package:sme_fin/src/core/extensions/extensions.dart';
+export 'package:sme_fin/src/core/services/services.dart';
+
