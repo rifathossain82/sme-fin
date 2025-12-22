@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/pages/business_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/personal_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/sign_in_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/verification_page.dart';
@@ -46,15 +47,21 @@ class NavigationManager {
       GoRoute(
         path: AppRoutes.personalDetails,
         pageBuilder: (context, state) {
-          return getPage(
-            child: const PersonalDetailsPage(),
-            state: state,
-          );
+          return getPage(child: const PersonalDetailsPage(), state: state);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.businessDetails,
+        pageBuilder: (context, state) {
+          return getPage(child: const BusinessDetailsPage(), state: state);
         },
       ),
     ];
 
-    router = GoRouter(initialLocation: AppRoutes.personalDetails, routes: routes);
+    router = GoRouter(
+      initialLocation: AppRoutes.businessDetails,
+      routes: routes,
+    );
   }
 
   static Page getPage({required Widget child, required GoRouterState state}) {
