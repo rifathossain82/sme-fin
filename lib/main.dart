@@ -34,6 +34,7 @@ class SMEfinApp extends StatelessWidget {
       routeInformationParser: NavigationManager.router.routeInformationParser,
       routeInformationProvider:
           NavigationManager.router.routeInformationProvider,
+      scaffoldMessengerKey: sl.get<GlobalKey<ScaffoldMessengerState>>(),
     );
   }
 }

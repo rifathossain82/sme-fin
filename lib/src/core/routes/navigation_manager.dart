@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/business_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/personal_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/sign_in_page.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/pages/upload_license_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/verification_page.dart';
 
 import 'app_routes.dart';
@@ -56,10 +57,16 @@ class NavigationManager {
           return getPage(child: const BusinessDetailsPage(), state: state);
         },
       ),
+      GoRoute(
+        path: AppRoutes.uploadLicense,
+        pageBuilder: (context, state) {
+          return getPage(child: const UploadLicensePage(), state: state);
+        },
+      ),
     ];
 
     router = GoRouter(
-      initialLocation: AppRoutes.businessDetails,
+      initialLocation: AppRoutes.uploadLicense,
       routes: routes,
     );
   }
