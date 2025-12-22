@@ -2,3 +2,8 @@ export 'package:sme_fin/src/core/helpers/helpers.dart';
 export 'package:sme_fin/src/core/errors/errors.dart';
 export 'package:sme_fin/src/core/network/network.dart';
 export 'package:sme_fin/src/core/utils/utils.dart';
+export 'package:sme_fin/src/core/widgets/widgets.dart';
+export 'package:sme_fin/src/core/routes/routes.dart';
+export 'package:sme_fin/src/core/di/injection.dart';
+export 'package:sme_fin/src/core/theme/app_theme.dart';
+export 'package:sme_fin/src/core/extensions/extensions.dart';
