@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:sme_fin/src/core/services/snack_bar_service.dart';
 
@@ -16,5 +19,9 @@ class FilePickerService {
       SnackBarService.showError('Error picking file: $e');
     }
     return null;
+  }
+
+  static String? getFileName(File? file) {
+    return file == null ? null : basename(file.path);
   }
 }
