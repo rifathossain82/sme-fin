@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/sign_in_page.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/pages/verification_page.dart';
 
 import 'app_routes.dart';
 
@@ -29,6 +30,17 @@ class NavigationManager {
         path: AppRoutes.signIn,
         pageBuilder: (context, state) =>
             getPage(child: const SignInPage(), state: state),
+      ),
+      GoRoute(
+        path: AppRoutes.verification,
+        pageBuilder: (context, state) {
+          final email = state.extra as String;
+
+          return getPage(
+            child: VerificationPage(email: email),
+            state: state,
+          );
+        },
       ),
     ];
 
