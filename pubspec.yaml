@@ -23,6 +23,7 @@ dependencies:
 
   # Network
   dio: ^5.9.0
+  dio_smart_retry: ^7.0.1
   connectivity_plus: ^7.0.0
 
   # Local Storage
@@ -46,6 +47,9 @@ dependencies:
 
   # Utils
   intl: ^0.20.2
+
+  # Debugging
+  logger: ^2.6.1
 
 # Flutter Splash Screen Setup
 #
