@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/core/core.dart';
 
 class SignInPage extends StatefulWidget {
@@ -18,7 +19,11 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
-  void _sendCode() {}
+  void _sendCode() {
+    if (_formKey.currentState!.validate()) {
+      context.push(AppRoutes.verification, extra: _emailController.text.trim());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
