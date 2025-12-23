@@ -11,13 +11,49 @@ A production-ready Flutter application for SME business registration and financi
 - [Getting Started](#getting-started)
 - [Running the Application](#running-the-application)
 - [Testing](#testing)
-- [Docker Support](#docker-support)
 - [Project Structure](#project-structure)
 - [Assumptions & Trade-offs](#assumptions--trade-offs)
 
 ## 🎯 Overview
 
 SMEfin is a cross-platform mobile application that enables Small and Medium Enterprises (SMEs) to register their business details and request financing. The app features a multi-step onboarding flow with offline support, automatic draft saving, and image compression.
+
+
+## Light Mode Screen Shorts
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/4470b25b-1cf2-4eda-a23f-34abb1ec63d5" alt="Screenshot 1" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/90b53a09-f3b5-4b49-90d3-3cb008d52e1e" alt="Screenshot 2" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/0a2e77fb-77e0-4d4d-ae18-b1d458acee03" alt="Screenshot 3" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/20b4571d-1082-4ace-8c59-466e395e02ba" alt="Screenshot 4" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/b46dd757-89f5-46d2-b820-dd754bce7ca1" alt="Screenshot 5" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/5995a5ce-e801-4f08-b47d-0eaeedf4f7e7" alt="Screenshot 6" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/9bf3ee10-da90-4237-991a-c1a9d95d5ea6" alt="Screenshot 7" width="120"></td>
+  </tr>
+</table>
+
+## Dark Mode Screen Shorts
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/b68e4d15-03fb-49b0-afec-4a3b5eedb1a4" alt="Screenshot 1" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/b769440b-5f9b-41e2-8259-29c1dd2a9881" alt="Screenshot 2" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/609d067d-aa67-4b7e-9446-35a1cfea3248" alt="Screenshot 3" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/cb7d6684-5451-42a1-8fe7-d746a6f2725e" alt="Screenshot 4" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/46369377-90a6-4388-9371-5bf2caec22f8" alt="Screenshot 5" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/4fa21820-3809-4a98-ac67-3217e21809c0" alt="Screenshot 6" width="120"></td>
+    <td><img src="https://github.com/user-attachments/assets/7a8e01a9-aa7f-46c3-b8b2-cd8b3eba4835" alt="Screenshot 7" width="120"></td>
+  </tr>
+</table>
+
+<br/>  
+
+## Download the App
+
+You can download the latest APK of the app from Google Drive:
+
+[Download APK](https://drive.google.com/file/d/18mhthcwxdwZGfZ9bOX5Ql_azRADhWRih/view?usp=sharing)
+
+<br/>  
 
 ## ✨ Features
 
@@ -55,34 +91,33 @@ SMEfin is a cross-platform mobile application that enables Small and Medium Ente
 The project follows **Feature-First Clean Architecture** with clear separation of concerns:
 
 ```
-lib/
-├── core/
-│   ├── di/              # Dependency injection (get_it)
-│   ├── error/           # Error handling (failures & exceptions)
-│   ├── network/         # Network layer (Dio, connectivity)
-│   ├── router/          # Navigation (go_router)
-│   ├── storage/         # Local storage (Hive)
-│   ├── theme/           # App theming (Material 3)
-│   └── utils/           # Utilities (validators, image compression)
-│
-└── features/
-    └── onboarding/
-        ├── data/
-        │   ├── datasources/
-        │   │   ├── local_datasource.dart    # Hive implementation
-        │   │   └── remote_datasource.dart   # Mock Dio API
-        │   ├── models/                      # Data models
-        │   └── repositories/                # Repository implementation
-        │
-        ├── domain/
-        │   ├── entities/                    # Business entities
-        │   ├── repositories/                # Repository interfaces
-        │   └── usecases/                    # Business logic
-        │
-        └── presentation/
-            ├── bloc/                        # State management (BLoC)
-            ├── pages/                       # UI screens
-            └── widgets/                     # Reusable widgets
+.
+└── lib/
+    └── src/
+        ├── core/
+        │   ├── di/              # Dependency injection (get_it)
+        │   ├── errors/          # Error handling (failures & exceptions)
+        │   ├── network/         # Network layer (Dio, connectivity)
+        │   ├── routes/          # Navigation (go_router)
+        │   ├── services/        # Local storage (Hive), SnackBar, etc.
+        │   ├── theme/           # App theming (Material 3)
+        │   └── utils/           # Utilities (App Constants, validators, image compression, etc.)
+        └── features/
+            └── onboarding/
+                ├── data/
+                │   ├── datasources/
+                │   │   ├── local_datasource.dart    # Hive implementation
+                │   │   └── remote_datasource.dart   # Mock Dio API
+                │   ├── models/                    # Data models
+                │   └── repositories/              # Repository implementation
+                ├── domain/
+                │   ├── entities/                  # Business entities
+                │   ├── repositories/              # Repository interfaces
+                │   └── usecases/                  # Business logic
+                └── presentation/
+                    ├── bloc/                      # State management (BLoC)
+                    ├── pages/                     # UI screens
+                    └── widgets/                   # Reusable widgets
 ```
 
 ### Architecture Layers
@@ -122,8 +157,8 @@ lib/
 
 ### Prerequisites
 
-- Flutter SDK (3.10.4 or later)
-- Dart SDK (3.10.4 or later)
+- Flutter SDK (3.38.5)
+- Dart SDK (3.10.4)
 - Android Studio / Xcode (for mobile development)
 - Git
 
@@ -131,8 +166,8 @@ lib/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd smefin
+   git clone https://github.com/rifathossain82/sme-fin.git
+   cd sme-fin
    ```
 
 2. **Install dependencies**
@@ -210,50 +245,22 @@ flutter test --coverage
 genhtml coverage/lcov.info -o coverage/html
 ```
 
-## 🐳 Docker Support
-
-### Build with Docker
-
-```bash
-# Build the Docker image
-docker-compose build
-
-# Run tests
-docker-compose run flutter-test
-
-# Build APK
-docker-compose run flutter-build
-```
-
-### Docker Commands
-
-```bash
-# Build image
-docker build -t smefin-app .
-
-# Run tests in container
-docker run --rm smefin-app flutter test
-
-# Build APK in container
-docker run --rm -v $(pwd):/app smefin-app flutter build apk
-```
-
 ## 📁 Project Structure
 
 ```
-smefin/
-├── android/                 # Android native code
-├── ios/                     # iOS native code
-├── lib/
-│   ├── core/               # Core utilities and services
-│   ├── features/           # Feature modules
-│   └── main.dart           # App entry point
-├── test/                   # Unit tests
-├── integration_test/       # Integration tests
-├── Dockerfile              # Docker configuration
-├── docker-compose.yml      # Docker Compose configuration
-├── pubspec.yaml            # Dependencies
-└── README.md              # This file
+.
+├── sme-fin/
+├── ├── android/                 # Android native code
+├── ├── ios/                     # iOS native code
+├── ├── lib/
+├── │   ├── src/
+├── │   │   ├── core/            # Core utilities and services (DI, network, theme, utils, etc.)
+├── │   │   └── features/        # Feature modules (e.g., onboarding, auth, dashboard)
+├── │   └── main.dart            # App entry point
+├── ├── test/                    # Unit tests
+├── ├── integration_test/        # Integration tests
+├── ├── pubspec.yaml             # Dependencies
+└── └── README.md                # Project documentation
 ```
 
 ## 🔍 Key Implementation Details
@@ -336,46 +343,8 @@ Either<Failure, Success>
 - No sensitive data in logs
 - Local storage encryption (can be added with Hive encryption)
 
-## 🚧 Future Enhancements
-
-- [ ] Backend API integration
-- [ ] Biometric authentication
-- [ ] Multi-language support
-- [ ] Analytics integration
-- [ ] Push notifications
-- [ ] Advanced file preview
-- [ ] OCR for license scanning
-
 ## 📄 License
 
 This project is created for demonstration purposes.
-
-## 👨‍💻 Development
-
-### Code Style
-
-- Follow Flutter/Dart style guide
-- Use meaningful variable names
-- Add comments for complex logic
-- Keep functions small and focused
-
-### Git Workflow
-
-```bash
-# Create feature branch
-git checkout -b feature/your-feature
-
-# Commit changes
-git commit -m "feat: add your feature"
-
-# Push to remote
-git push origin feature/your-feature
-```
-
-## 📞 Support
-
-For issues or questions, please create an issue in the repository.
-
----
 
 **Built with ❤️ using Flutter**
