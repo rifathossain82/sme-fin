@@ -5,6 +5,7 @@ import 'package:sme_fin/src/core/core.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_state.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -55,39 +56,31 @@ class _SignInPageState extends State<SignInPage> {
               padding: const EdgeInsets.all(24.0),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 32),
-                    Text(
-                      'Welcome to ${AppConstants.appName}',
-                      style: context.textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      OnboardingHeaderWidget(
+                        title: 'Welcome to ${AppConstants.appName}',
+                        subtitle: 'Enter your email to get started',
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Enter your email to get started',
-                      style: context.textTheme.bodyLarge?.copyWith(
-                        color: context.colorScheme.onSurfaceVariant,
+                      const SizedBox(height: 48),
+                      CustomTextField(
+                        label: 'Email',
+                        hintText: 'Enter your email',
+                        controller: _emailController,
+                        validator: Validators.validateEmail,
+                        keyboardType: TextInputType.emailAddress,
+                        enabled: !isLoading,
                       ),
-                    ),
-                    const SizedBox(height: 48),
-                    CustomTextField(
-                      label: 'Email',
-                      hintText: 'Enter your email',
-                      controller: _emailController,
-                      validator: Validators.validateEmail,
-                      keyboardType: TextInputType.emailAddress,
-                      enabled: !isLoading,
-                    ),
-                    const SizedBox(height: 24),
-                    CustomButton(
-                      text: 'Send Code',
-                      onPressed: _sendCode,
-                      isLoading: isLoading,
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      CustomButton(
+                        text: 'Send Code',
+                        onPressed: _sendCode,
+                        isLoading: isLoading,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_progress_indicator.dart';
 import 'package:sme_fin/src/core/core.dart';
 
@@ -57,53 +58,45 @@ class _BusinessDetailsPageState extends State<BusinessDetailsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Business Details')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const OnboardingProgressIndicator(
-                  currentStep: 2,
-                  totalSteps: 3,
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  'Business Details',
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const OnboardingProgressIndicator(
+                    currentStep: 2,
+                    totalSteps: 3,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Tell us about your business',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
+                  const SizedBox(height: 32),
+                  const OnboardingHeaderWidget(
+                    title: 'Business Details',
+                    subtitle: 'Tell us about your business',
                   ),
-                ),
-                const SizedBox(height: 32),
-                CustomTextField(
-                  label: 'Business Name',
-                  hintText: 'Enter your business name',
-                  controller: _businessNameController,
-                  validator: (value) =>
-                      Validators.validateRequired(value, 'Business name'),
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: 'Trade License Number',
-                  hintText: 'Enter trade license number',
-                  controller: _tradeLicenseController,
-                  validator: (value) => Validators.validateRequired(
-                    value,
-                    'Trade license number',
+                  const SizedBox(height: 32),
+                  CustomTextField(
+                    label: 'Business Name',
+                    hintText: 'Enter your business name',
+                    controller: _businessNameController,
+                    validator: (value) =>
+                        Validators.validateRequired(value, 'Business name'),
                   ),
-                ),
-                const Spacer(),
-                CustomButton(text: 'Next', onPressed: _next),
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Trade License Number',
+                    hintText: 'Enter trade license number',
+                    controller: _tradeLicenseController,
+                    validator: (value) => Validators.validateRequired(
+                      value,
+                      'Trade license number',
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  CustomButton(text: 'Next', onPressed: _next),
+                ],
+              ),
             ),
           ),
         ),

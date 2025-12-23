@@ -6,6 +6,7 @@ import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entit
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_state.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 
 class VerificationPage extends StatefulWidget {
   final String email;
@@ -74,71 +75,63 @@ class _VerificationPageState extends State<VerificationPage> {
           return SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Enter Code',
-                    style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    OnboardingHeaderWidget(
+                      title: 'Enter Code',
+                      subtitle: 'We sent a verification code to ${widget.email}',
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'We sent a verification code to ${widget.email}',
-                    style: context.textTheme.bodyLarge?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(height: 48),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(
-                      4,
-                      (index) => SizedBox(
-                        width: 64,
-                        child: TextField(
-                          controller: _controllers[index],
-                          focusNode: _focusNodes[index],
-                          enabled: !isLoading,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          decoration: InputDecoration(
-                            counterText: '',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                    const SizedBox(height: 48),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(
+                        4,
+                        (index) => SizedBox(
+                          width: 64,
+                          child: TextField(
+                            controller: _controllers[index],
+                            focusNode: _focusNodes[index],
+                            enabled: !isLoading,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            maxLength: 1,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            onChanged: (value) {
+                              if (value.isNotEmpty && index < 3) {
+                                _focusNodes[index + 1].requestFocus();
+                              } else if (value.isEmpty && index > 0) {
+                                _focusNodes[index - 1].requestFocus();
+                              }
+                              if (index == 3 && value.isNotEmpty) {
+                                _verifyCode();
+                              }
+                            },
                           ),
-                          onChanged: (value) {
-                            if (value.isNotEmpty && index < 3) {
-                              _focusNodes[index + 1].requestFocus();
-                            } else if (value.isEmpty && index > 0) {
-                              _focusNodes[index - 1].requestFocus();
-                            }
-                            if (index == 3 && value.isNotEmpty) {
-                              _verifyCode();
-                            }
-                          },
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  Center(
-                    child: TextButton(
-                      onPressed: isLoading ? null : _resendCode,
-                      child: const Text('Resend code'),
+                    const SizedBox(height: 24),
+                    CustomButton(
+                      text: 'Verify',
+                      onPressed: _verifyCode,
+                      isLoading: isLoading,
                     ),
-                  ),
-                  const Spacer(),
-                  CustomButton(
-                    text: 'Verify',
-                    onPressed: _verifyCode,
-                    isLoading: isLoading,
-                  ),
-                  const SizedBox(height: 24),
-                ],
+                    const SizedBox(height: 16),
+                    Center(
+                      child: TextButton(
+                        onPressed: isLoading ? null : _resendCode,
+                        child: const Text('Resend code'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

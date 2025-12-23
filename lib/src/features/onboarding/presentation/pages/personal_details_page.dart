@@ -5,6 +5,7 @@ import 'package:sme_fin/src/core/core.dart';
 import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 
 import '../widgets/onboarding_progress_indicator.dart';
 
@@ -57,57 +58,49 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Personal Details')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const OnboardingProgressIndicator(
-                  currentStep: 1,
-                  totalSteps: 3,
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  'Personal Details',
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const OnboardingProgressIndicator(
+                    currentStep: 1,
+                    totalSteps: 3,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Tell us about yourself',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
+                  const SizedBox(height: 32),
+                  const OnboardingHeaderWidget(
+                    title: 'Personal Details',
+                    subtitle: 'Tell us about yourself',
                   ),
-                ),
-                const SizedBox(height: 32),
-                CustomTextField(
-                  label: 'Full Name',
-                  hintText: 'Enter your full name',
-                  controller: _fullNameController,
-                  validator: (value) =>
-                      Validators.validateRequired(value, 'Full name'),
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: 'Email',
-                  controller: _emailController,
-                  enabled: false,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: 'Phone Number',
-                  hintText: 'Enter your phone number',
-                  controller: _phoneController,
-                  validator: Validators.validatePhone,
-                  keyboardType: TextInputType.phone,
-                ),
-                const Spacer(),
-                CustomButton(text: 'Next', onPressed: _next),
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 32),
+                  CustomTextField(
+                    label: 'Full Name',
+                    hintText: 'Enter your full name',
+                    controller: _fullNameController,
+                    validator: (value) =>
+                        Validators.validateRequired(value, 'Full name'),
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Email',
+                    controller: _emailController,
+                    enabled: false,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Phone Number',
+                    hintText: 'Enter your phone number',
+                    controller: _phoneController,
+                    validator: Validators.validatePhone,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 24),
+                  CustomButton(text: 'Next', onPressed: _next),
+                ],
+              ),
             ),
           ),
         ),

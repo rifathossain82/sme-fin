@@ -6,6 +6,7 @@ import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entit
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_state.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 
 class ConfirmationPage extends StatelessWidget {
   final OnboardingEntity data;
@@ -36,76 +37,66 @@ class ConfirmationPage extends StatelessWidget {
           final isLoading = state is OnboardingLoading;
 
           return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Summary',
-                    style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const OnboardingHeaderWidget(
+                      title: 'Summary',
+                      subtitle: 'Please review your information',
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _InfoCard(
-                            title: 'Personal Info',
-                            children: [
-                              _InfoItem(
-                                label: 'Full Name',
-                                value: data.fullName ?? 'N/A',
-                              ),
-                              _InfoItem(label: 'Email', value: data.email),
-                              _InfoItem(
-                                label: 'Phone Number',
-                                value: data.phoneNumber ?? 'N/A',
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          _InfoCard(
-                            title: 'Business Info',
-                            children: [
-                              _InfoItem(
-                                label: 'Business Name',
-                                value: data.businessName ?? 'N/A',
-                              ),
-                              _InfoItem(
-                                label: 'Trade License Number',
-                                value: data.tradeLicenseNumber ?? 'N/A',
-                              ),
-                              _InfoItem(
-                                label: 'License File',
-                                value:
-                                    data.tradeLicensePath?.split('/').last ??
-                                    'N/A',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    const SizedBox(height: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _InfoCard(
+                          title: 'Personal Info',
+                          children: [
+                            _InfoItem(
+                              label: 'Full Name',
+                              value: data.fullName ?? 'N/A',
+                            ),
+                            _InfoItem(label: 'Email', value: data.email),
+                            _InfoItem(
+                              label: 'Phone Number',
+                              value: data.phoneNumber ?? 'N/A',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        _InfoCard(
+                          title: 'Business Info',
+                          children: [
+                            _InfoItem(
+                              label: 'Business Name',
+                              value: data.businessName ?? 'N/A',
+                            ),
+                            _InfoItem(
+                              label: 'Trade License Number',
+                              value: data.tradeLicenseNumber ?? 'N/A',
+                            ),
+                            _InfoItem(
+                              label: 'License File',
+                              value:
+                                  data.tradeLicensePath?.split('/').last ??
+                                  'N/A',
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  CustomButton(
-                    text: 'Submit',
-                    onPressed: isLoading ? null : () => _submit(context),
-                    isLoading: isLoading,
-                  ),
-                  const SizedBox(height: 20),
-                  Center(
-                    child: Text(
-                      'Data stored securely',
-                      style: context.textTheme.bodyMedium,
+                    const SizedBox(height: 24),
+                    CustomButton(
+                      text: 'Submit',
+                      onPressed: isLoading ? null : () => _submit(context),
+                      isLoading: isLoading,
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                ],
+                    const SizedBox(height: 16),
+                    const Center(child: _DataStoredStatusCard()),
+                  ],
+                ),
               ),
             ),
           );
@@ -165,6 +156,30 @@ class _InfoItem extends StatelessWidget {
         children: [
           Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
           Text(value, style: TextStyle(color: Colors.grey.shade700)),
+        ],
+      ),
+    );
+  }
+}
+
+class _DataStoredStatusCard extends StatelessWidget {
+  const _DataStoredStatusCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: context.colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.info_outline, color: context.colorScheme.primary),
+          const SizedBox(width: 12),
+          Text('Data stored securely', style: context.textTheme.bodySmall),
         ],
       ),
     );
