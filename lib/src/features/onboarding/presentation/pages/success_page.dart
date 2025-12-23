@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/core/core.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({super.key});
@@ -46,6 +49,9 @@ class SuccessPage extends StatelessWidget {
               CustomButton(
                 text: 'Go to Dashboard',
                 onPressed: () {
+                  context.read<OnboardingBloc>().add(
+                    ClearOnboardingDataEvent(),
+                  );
                   context.go(AppRoutes.signIn);
                 },
               ),

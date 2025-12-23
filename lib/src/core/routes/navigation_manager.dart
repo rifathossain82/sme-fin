@@ -81,7 +81,11 @@ class NavigationManager {
       GoRoute(
         path: AppRoutes.confirmation,
         pageBuilder: (context, state) {
-          return getPage(child: const ConfirmationPage(), state: state);
+          final data = state.extra as OnboardingEntity;
+          return getPage(
+            child: ConfirmationPage(data: data),
+            state: state,
+          );
         },
       ),
       GoRoute(
