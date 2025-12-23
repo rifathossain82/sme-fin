@@ -1,11 +1,19 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_progress_indicator.dart';
 import 'package:sme_fin/src/core/core.dart';
 
 class UploadLicensePage extends StatefulWidget {
-  const UploadLicensePage({super.key});
+  final OnboardingEntity data;
+
+  const UploadLicensePage({super.key, required this.data});
 
   @override
   State<UploadLicensePage> createState() => _UploadLicensePageState();
@@ -42,9 +50,13 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
 
   void _next() {
     if (_filePath == null) {
-      SnackBarService.showError('Please upload a file.');
+      SnackBarService.showError('Please upload your trade license');
       return;
     }
+
+    final updatedData = widget.data.copyWith(tradeLicensePath: _filePath);
+    context.read<OnboardingBloc>().add(UpdateOnboardingDataEvent(updatedData));
+    context.push(AppRoutes.confirmation, extra: updatedData);
   }
 
   String get fileName => FilePickerService.getFileName(File(_filePath!))!;
@@ -54,40 +66,32 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Upload Trade License')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const OnboardingProgressIndicator(currentStep: 3, totalSteps: 3),
-              const SizedBox(height: 32),
-              Text(
-                'Upload Trade License',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const OnboardingProgressIndicator(currentStep: 3, totalSteps: 3),
+                const SizedBox(height: 32),
+                const OnboardingHeaderWidget(
+                  title: 'Upload Trade License',
+                  subtitle: 'Upload your business trade license document',
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Upload your business trade license document',
-                style: context.textTheme.bodyLarge?.copyWith(
-                  color: context.colorScheme.onSurfaceVariant,
+                const SizedBox(height: 48),
+                _FilePickerCard(
+                  isCompressing: _isCompressing,
+                  onPickFile: _pickFile,
+                  filePath: _filePath,
                 ),
-              ),
-              const SizedBox(height: 48),
-              _FilePickerCard(
-                isCompressing: _isCompressing,
-                onPickFile: _pickFile,
-                filePath: _filePath,
-              ),
 
-              const SizedBox(height: 20),
-              if (_filePath != null)
-                _SingleFileCard(fileName: fileName, onClearFile: _clearFile),
-              const Spacer(),
-              CustomButton(text: 'Next', onPressed: _next),
-              const SizedBox(height: 24),
-            ],
+                const SizedBox(height: 20),
+                if (_filePath != null)
+                  _SingleFileCard(fileName: fileName, onClearFile: _clearFile),
+                const SizedBox(height: 24),
+                CustomButton(text: 'Next', onPressed: _next),
+              ],
+            ),
           ),
         ),
       ),

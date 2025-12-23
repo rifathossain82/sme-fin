@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/core/core.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_header_widget.dart';
 
 import '../widgets/onboarding_progress_indicator.dart';
 
 class PersonalDetailsPage extends StatefulWidget {
-  const PersonalDetailsPage({super.key});
+  final OnboardingEntity data;
+
+  const PersonalDetailsPage({super.key, required this.data});
 
   @override
   State<PersonalDetailsPage> createState() => _PersonalDetailsPageState();
@@ -19,9 +27,9 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _fullNameController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneController = TextEditingController();
+    _fullNameController = TextEditingController(text: widget.data.fullName);
+    _emailController = TextEditingController(text: widget.data.email);
+    _phoneController = TextEditingController(text: widget.data.phoneNumber);
   }
 
   @override
@@ -33,7 +41,16 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   }
 
   void _next() {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      final updatedData = widget.data.copyWith(
+        fullName: _fullNameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+      );
+      context.read<OnboardingBloc>().add(
+        UpdateOnboardingDataEvent(updatedData),
+      );
+      context.push(AppRoutes.businessDetails, extra: updatedData);
+    }
   }
 
   @override
@@ -41,57 +58,49 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Personal Details')),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const OnboardingProgressIndicator(
-                  currentStep: 1,
-                  totalSteps: 3,
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  'Personal Details',
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const OnboardingProgressIndicator(
+                    currentStep: 1,
+                    totalSteps: 3,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Tell us about yourself',
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
+                  const SizedBox(height: 32),
+                  const OnboardingHeaderWidget(
+                    title: 'Personal Details',
+                    subtitle: 'Tell us about yourself',
                   ),
-                ),
-                const SizedBox(height: 32),
-                CustomTextField(
-                  label: 'Full Name',
-                  hintText: 'Enter your full name',
-                  controller: _fullNameController,
-                  validator: (value) =>
-                      Validators.validateRequired(value, 'Full name'),
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: 'Email',
-                  controller: _emailController,
-                  enabled: false,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  label: 'Phone Number',
-                  hintText: 'Enter your phone number',
-                  controller: _phoneController,
-                  validator: Validators.validatePhone,
-                  keyboardType: TextInputType.phone,
-                ),
-                const Spacer(),
-                CustomButton(text: 'Next', onPressed: _next),
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 32),
+                  CustomTextField(
+                    label: 'Full Name',
+                    hintText: 'Enter your full name',
+                    controller: _fullNameController,
+                    validator: (value) =>
+                        Validators.validateRequired(value, 'Full name'),
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Email',
+                    controller: _emailController,
+                    enabled: false,
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    label: 'Phone Number',
+                    hintText: 'Enter your phone number',
+                    controller: _phoneController,
+                    validator: Validators.validatePhone,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 24),
+                  CustomButton(text: 'Next', onPressed: _next),
+                ],
+              ),
             ),
           ),
         ),

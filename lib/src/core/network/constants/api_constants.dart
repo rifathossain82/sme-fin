@@ -6,5 +6,5 @@ class ApiConstants {
   static const int receiveTimeout = 30000;
 
   /// TODO: Need to add production base url
-  static const String baseUrl = 'PRODUCTION_BASE_URL';
+  static const String baseUrl = 'https://mock.api.smefin.com';
 }
