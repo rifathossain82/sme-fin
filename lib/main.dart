@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sme_fin/src/core/core.dart';
+import 'package:sme_fin/src/core/services/local_storage_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await LocalStorageService.init();
 
   // Initialize Navigation Manager
   NavigationManager.instance;
