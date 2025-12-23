@@ -79,7 +79,7 @@ class NavigationManager {
       ),
     ];
 
-    router = GoRouter(initialLocation: AppRoutes.success, routes: routes);
+    router = GoRouter(initialLocation: AppRoutes.signIn, routes: routes);
   }
 
   static Page getPage({required Widget child, required GoRouterState state}) {
