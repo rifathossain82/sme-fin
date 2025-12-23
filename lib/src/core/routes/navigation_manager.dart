@@ -4,6 +4,7 @@ import 'package:sme_fin/src/features/onboarding/presentation/pages/business_deta
 import 'package:sme_fin/src/features/onboarding/presentation/pages/confirmation_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/personal_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/sign_in_page.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/pages/success_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/upload_license_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/verification_page.dart';
 
@@ -70,9 +71,15 @@ class NavigationManager {
           return getPage(child: const ConfirmationPage(), state: state);
         },
       ),
+      GoRoute(
+        path: AppRoutes.success,
+        pageBuilder: (context, state) {
+          return getPage(child: const SuccessPage(), state: state);
+        },
+      ),
     ];
 
-    router = GoRouter(initialLocation: AppRoutes.confirmation, routes: routes);
+    router = GoRouter(initialLocation: AppRoutes.success, routes: routes);
   }
 
   static Page getPage({required Widget child, required GoRouterState state}) {
