@@ -1,11 +1,18 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/widgets/onboarding_progress_indicator.dart';
 import 'package:sme_fin/src/core/core.dart';
 
 class UploadLicensePage extends StatefulWidget {
-  const UploadLicensePage({super.key});
+  final OnboardingEntity data;
+
+  const UploadLicensePage({super.key, required this.data});
 
   @override
   State<UploadLicensePage> createState() => _UploadLicensePageState();
@@ -42,9 +49,13 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
 
   void _next() {
     if (_filePath == null) {
-      SnackBarService.showError('Please upload a file.');
+      SnackBarService.showError('Please upload your trade license');
       return;
     }
+
+    final updatedData = widget.data.copyWith(tradeLicensePath: _filePath);
+    context.read<OnboardingBloc>().add(UpdateOnboardingDataEvent(updatedData));
+    context.push(AppRoutes.confirmation, extra: updatedData);
   }
 
   String get fileName => FilePickerService.getFileName(File(_filePath!))!;

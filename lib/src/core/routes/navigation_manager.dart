@@ -71,7 +71,11 @@ class NavigationManager {
       GoRoute(
         path: AppRoutes.uploadLicense,
         pageBuilder: (context, state) {
-          return getPage(child: const UploadLicensePage(), state: state);
+          final data = state.extra as OnboardingEntity;
+          return getPage(
+            child: UploadLicensePage(data: data),
+            state: state,
+          );
         },
       ),
       GoRoute(
