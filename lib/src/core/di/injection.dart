@@ -10,9 +10,9 @@ final sl = GetIt.instance;
 Future<void> initializeDependencies() async {
   // Core
   sl.registerLazySingleton<ApiClient>(() => ApiClient());
-  sl.registerLazySingleton<ApiService>(() => ApiService(sl<ApiClient>().dio));
-  sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<ApiService>(() => ApiService(sl<ApiClient>().dio, sl<NetworkInfo>()));
+  sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton(() => GlobalKey<ScaffoldMessengerState>());
   sl.registerLazySingleton(() => LocalStorageService());
 }
