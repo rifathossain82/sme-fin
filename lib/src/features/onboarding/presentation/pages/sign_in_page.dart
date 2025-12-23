@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/core/core.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_state.dart';
@@ -32,6 +33,34 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
+  void _navigate(BuildContext context, OnboardingEntity data) {
+    Log.debug('Data updated. ${data.step.name}');
+
+    switch (data.step) {
+      case OnboardingStep.signIn:
+        context.go(AppRoutes.signIn);
+        break;
+      case OnboardingStep.verification:
+        context.go(AppRoutes.verification, extra: data.email);
+        break;
+      case OnboardingStep.personalDetails:
+        context.go(AppRoutes.personalDetails, extra: data);
+        break;
+      case OnboardingStep.businessDetails:
+        context.go(AppRoutes.businessDetails, extra: data);
+        break;
+      case OnboardingStep.uploadLicense:
+        context.go(AppRoutes.uploadLicense, extra: data);
+        break;
+      case OnboardingStep.confirmation:
+        context.go(AppRoutes.confirmation, extra: data);
+        break;
+      case OnboardingStep.success:
+        context.go(AppRoutes.success);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +74,13 @@ class _SignInPageState extends State<SignInPage> {
               state.message,
               actionLabel: 'Retry',
               onAction: _sendCode,
+            );
+          }
+          if (state is OnboardingDataLoaded) {
+            _navigate(
+              context,
+              state.data ??
+                  OnboardingEntity(step: OnboardingStep.signIn, email: ''),
             );
           }
         },

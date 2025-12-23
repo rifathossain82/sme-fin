@@ -43,6 +43,7 @@ class _BusinessDetailsPageState extends State<BusinessDetailsPage> {
   void _next() {
     if (_formKey.currentState!.validate()) {
       final updatedData = widget.data.copyWith(
+        step: OnboardingStep.businessDetails,
         businessName: _businessNameController.text.trim(),
         tradeLicenseNumber: _tradeLicenseController.text.trim(),
       );

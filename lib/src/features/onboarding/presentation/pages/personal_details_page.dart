@@ -43,6 +43,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   void _next() {
     if (_formKey.currentState!.validate()) {
       final updatedData = widget.data.copyWith(
+        step: OnboardingStep.personalDetails,
         fullName: _fullNameController.text.trim(),
         phoneNumber: _phoneController.text.trim(),
       );

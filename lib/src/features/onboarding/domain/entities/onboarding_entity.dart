@@ -1,6 +1,17 @@
 import 'package:equatable/equatable.dart';
 
+enum OnboardingStep {
+  signIn,
+  verification,
+  personalDetails,
+  businessDetails,
+  uploadLicense,
+  confirmation,
+  success,
+}
+
 class OnboardingEntity extends Equatable {
+  final OnboardingStep step;
   final String email;
   final String? verificationCode;
   final String? fullName;
@@ -11,6 +22,7 @@ class OnboardingEntity extends Equatable {
   final bool isSubmitted;
 
   const OnboardingEntity({
+    required this.step,
     required this.email,
     this.verificationCode,
     this.fullName,
@@ -22,6 +34,7 @@ class OnboardingEntity extends Equatable {
   });
 
   OnboardingEntity copyWith({
+    OnboardingStep? step,
     String? email,
     String? verificationCode,
     String? fullName,
@@ -32,6 +45,7 @@ class OnboardingEntity extends Equatable {
     bool? isSubmitted,
   }) {
     return OnboardingEntity(
+      step: step ?? this.step,
       email: email ?? this.email,
       verificationCode: verificationCode ?? this.verificationCode,
       fullName: fullName ?? this.fullName,
@@ -45,6 +59,7 @@ class OnboardingEntity extends Equatable {
 
   @override
   List<Object?> get props => [
+    step,
     email,
     verificationCode,
     fullName,

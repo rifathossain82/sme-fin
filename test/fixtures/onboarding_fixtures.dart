@@ -13,6 +13,7 @@ class OnboardingFixtures {
 
   // Complete model
   static const completeModel = OnboardingModel(
+    step: OnboardingStep.success,
     email: testEmail,
     verificationCode: testVerificationCode,
     fullName: testFullName,
@@ -24,10 +25,11 @@ class OnboardingFixtures {
   );
 
   // Minimal model (only required fields)
-  static const minimalModel = OnboardingModel(email: testEmail);
+  static const minimalModel = OnboardingModel(step: OnboardingStep.success, email: testEmail);
 
   // Partial model (some optional fields)
   static const partialModel = OnboardingModel(
+    step: OnboardingStep.success,
     email: testEmail,
     fullName: testFullName,
     businessName: testBusinessName,
@@ -35,6 +37,7 @@ class OnboardingFixtures {
 
   // Complete entity
   static const completeEntity = OnboardingEntity(
+    step: OnboardingStep.success,
     email: testEmail,
     verificationCode: testVerificationCode,
     fullName: testFullName,
@@ -46,7 +49,7 @@ class OnboardingFixtures {
   );
 
   // Minimal entity (only required fields)
-  static const minimalEntity = OnboardingEntity(email: testEmail);
+  static const minimalEntity = OnboardingEntity(step: OnboardingStep.success, email: testEmail);
 
   // Complete JSON
   static final completeJson = {
