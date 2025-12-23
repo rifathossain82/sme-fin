@@ -34,8 +34,6 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _navigate(BuildContext context, OnboardingEntity data) {
-    Log.debug('Data updated. ${data.step.name}');
-
     switch (data.step) {
       case OnboardingStep.signIn:
         context.go(AppRoutes.signIn);
