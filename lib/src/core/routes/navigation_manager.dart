@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/business_details_page.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/pages/confirmation_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/personal_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/sign_in_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/upload_license_page.dart';
@@ -63,12 +64,15 @@ class NavigationManager {
           return getPage(child: const UploadLicensePage(), state: state);
         },
       ),
+      GoRoute(
+        path: AppRoutes.confirmation,
+        pageBuilder: (context, state) {
+          return getPage(child: const ConfirmationPage(), state: state);
+        },
+      ),
     ];
 
-    router = GoRouter(
-      initialLocation: AppRoutes.uploadLicense,
-      routes: routes,
-    );
+    router = GoRouter(initialLocation: AppRoutes.confirmation, routes: routes);
   }
 
   static Page getPage({required Widget child, required GoRouterState state}) {
