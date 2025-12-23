@@ -3,6 +3,7 @@ import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entit
 
 class OnboardingFixtures {
   // Test constants
+  static const testStep = OnboardingStep.success;
   static const testEmail = 'test@example.com';
   static const testVerificationCode = '123456';
   static const testFullName = 'John Doe';
@@ -53,6 +54,7 @@ class OnboardingFixtures {
 
   // Complete JSON
   static final completeJson = {
+    'step': testStep.name,
     'email': testEmail,
     'verificationCode': testVerificationCode,
     'fullName': testFullName,
