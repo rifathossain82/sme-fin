@@ -23,6 +23,19 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
   String? _filePath;
   bool _isCompressing = false;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      _loadInitialData();
+    });
+  }
+
+  void _loadInitialData(){
+    _filePath = widget.data.tradeLicensePath;
+    setState(() {});
+  }
+
   Future<void> _pickFile() async {
     final result = await FilePickerService.pickFile();
 
@@ -54,7 +67,10 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
       return;
     }
 
-    final updatedData = widget.data.copyWith(tradeLicensePath: _filePath);
+    final updatedData = widget.data.copyWith(
+      step: OnboardingStep.uploadLicense,
+      tradeLicensePath: _filePath,
+    );
     context.read<OnboardingBloc>().add(UpdateOnboardingDataEvent(updatedData));
     context.push(AppRoutes.confirmation, extra: updatedData);
   }
@@ -72,7 +88,10 @@ class _UploadLicensePageState extends State<UploadLicensePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const OnboardingProgressIndicator(currentStep: 3, totalSteps: 3),
+                const OnboardingProgressIndicator(
+                  currentStep: 3,
+                  totalSteps: 3,
+                ),
                 const SizedBox(height: 32),
                 const OnboardingHeaderWidget(
                   title: 'Upload Trade License',

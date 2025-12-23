@@ -24,6 +24,7 @@ class ConfirmationPage extends StatelessWidget {
       body: BlocConsumer<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
           if (state is OnboardingSubmissionSuccess) {
+            context.read<OnboardingBloc>().add(ClearOnboardingDataEvent());
             context.go(AppRoutes.success);
           } else if (state is OnboardingError) {
             SnackBarService.showError(

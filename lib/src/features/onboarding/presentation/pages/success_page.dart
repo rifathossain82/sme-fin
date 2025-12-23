@@ -52,9 +52,6 @@ class SuccessPage extends StatelessWidget {
                     width: context.screenWidth * 0.7,
                     text: 'Go to Dashboard',
                     onPressed: () {
-                      context.read<OnboardingBloc>().add(
-                        ClearOnboardingDataEvent(),
-                      );
                       context.go(AppRoutes.signIn);
                     },
                   ),

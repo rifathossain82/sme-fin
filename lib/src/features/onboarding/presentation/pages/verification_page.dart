@@ -54,7 +54,10 @@ class _VerificationPageState extends State<VerificationPage> {
         listener: (context, state) {
           if (state is CodeVerified) {
             /// Save email and navigate to personal details
-            final entity = OnboardingEntity(email: widget.email);
+            final entity = OnboardingEntity(
+              step: OnboardingStep.verification,
+              email: widget.email,
+            );
             context.read<OnboardingBloc>().add(
               UpdateOnboardingDataEvent(entity),
             );
@@ -81,7 +84,8 @@ class _VerificationPageState extends State<VerificationPage> {
                   children: [
                     OnboardingHeaderWidget(
                       title: 'Enter Code',
-                      subtitle: 'We sent a verification code to ${widget.email}',
+                      subtitle:
+                          'We sent a verification code to ${widget.email}',
                     ),
                     const SizedBox(height: 48),
                     Row(

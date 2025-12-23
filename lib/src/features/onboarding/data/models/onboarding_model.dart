@@ -2,6 +2,7 @@ import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entit
 
 class OnboardingModel extends OnboardingEntity {
   const OnboardingModel({
+    required super.step,
     required super.email,
     super.verificationCode,
     super.fullName,
@@ -14,6 +15,10 @@ class OnboardingModel extends OnboardingEntity {
 
   factory OnboardingModel.fromJson(Map<String, dynamic> json) {
     return OnboardingModel(
+      step: OnboardingStep.values.firstWhere(
+        (step) => step.name == json['step'],
+        orElse: () => OnboardingStep.signIn,
+      ),
       email: json['email'] as String,
       verificationCode: json['verificationCode'] as String?,
       fullName: json['fullName'] as String?,
@@ -27,6 +32,7 @@ class OnboardingModel extends OnboardingEntity {
 
   Map<String, dynamic> toJson() {
     return {
+      'step': step.name,
       'email': email,
       'verificationCode': verificationCode,
       'fullName': fullName,
@@ -40,6 +46,7 @@ class OnboardingModel extends OnboardingEntity {
 
   factory OnboardingModel.fromEntity(OnboardingEntity entity) {
     return OnboardingModel(
+      step: entity.step,
       email: entity.email,
       verificationCode: entity.verificationCode,
       fullName: entity.fullName,
