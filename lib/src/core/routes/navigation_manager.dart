@@ -61,7 +61,11 @@ class NavigationManager {
       GoRoute(
         path: AppRoutes.businessDetails,
         pageBuilder: (context, state) {
-          return getPage(child: const BusinessDetailsPage(), state: state);
+          final data = state.extra as OnboardingEntity;
+          return getPage(
+            child: BusinessDetailsPage(data: data),
+            state: state,
+          );
         },
       ),
       GoRoute(
