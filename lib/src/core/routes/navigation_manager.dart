@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/business_details_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/confirmation_page.dart';
 import 'package:sme_fin/src/features/onboarding/presentation/pages/personal_details_page.dart';
@@ -50,7 +51,11 @@ class NavigationManager {
       GoRoute(
         path: AppRoutes.personalDetails,
         pageBuilder: (context, state) {
-          return getPage(child: const PersonalDetailsPage(), state: state);
+          final data = state.extra as OnboardingEntity;
+          return getPage(
+            child: PersonalDetailsPage(data: data),
+            state: state,
+          );
         },
       ),
       GoRoute(

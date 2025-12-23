@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sme_fin/src/core/core.dart';
+import 'package:sme_fin/src/features/onboarding/domain/entities/onboarding_entity.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_event.dart';
 
 import '../widgets/onboarding_progress_indicator.dart';
 
 class PersonalDetailsPage extends StatefulWidget {
-  const PersonalDetailsPage({super.key});
+  final OnboardingEntity data;
+
+  const PersonalDetailsPage({super.key, required this.data});
 
   @override
   State<PersonalDetailsPage> createState() => _PersonalDetailsPageState();
@@ -19,9 +26,9 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _fullNameController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneController = TextEditingController();
+    _fullNameController = TextEditingController(text: widget.data.fullName);
+    _emailController = TextEditingController(text: widget.data.email);
+    _phoneController = TextEditingController(text: widget.data.phoneNumber);
   }
 
   @override
@@ -33,7 +40,16 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   }
 
   void _next() {
-    if (_formKey.currentState!.validate()) {}
+    if (_formKey.currentState!.validate()) {
+      final updatedData = widget.data.copyWith(
+        fullName: _fullNameController.text.trim(),
+        phoneNumber: _phoneController.text.trim(),
+      );
+      context.read<OnboardingBloc>().add(
+        UpdateOnboardingDataEvent(updatedData),
+      );
+      context.push(AppRoutes.businessDetails, extra: updatedData);
+    }
   }
 
   @override
