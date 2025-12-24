@@ -37,28 +37,32 @@ class NavigationManager {
     GoRoute(
       path: AppRoutes.personalDetails,
       pageBuilder: (context, state) {
-        final data = state.extra as OnboardingEntity;
+        final data = state.extra as OnboardingEntity?;
+        if (data == null) return _page(const SignInPage(), state);
         return _page(PersonalDetailsPage(data: data), state);
       },
     ),
     GoRoute(
       path: AppRoutes.businessDetails,
       pageBuilder: (context, state) {
-        final data = state.extra as OnboardingEntity;
+        final data = state.extra as OnboardingEntity?;
+        if (data == null) return _page(const SignInPage(), state);
         return _page(BusinessDetailsPage(data: data), state);
       },
     ),
     GoRoute(
       path: AppRoutes.uploadLicense,
       pageBuilder: (context, state) {
-        final data = state.extra as OnboardingEntity;
+        final data = state.extra as OnboardingEntity?;
+        if (data == null) return _page(const SignInPage(), state);
         return _page(UploadLicensePage(data: data), state);
       },
     ),
     GoRoute(
       path: AppRoutes.confirmation,
       pageBuilder: (context, state) {
-        final data = state.extra as OnboardingEntity;
+        final data = state.extra as OnboardingEntity?;
+        if (data == null) return _page(const SignInPage(), state);
         return _page(ConfirmationPage(data: data), state);
       },
     ),
