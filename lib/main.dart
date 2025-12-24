@@ -7,17 +7,19 @@ import 'package:sme_fin/src/features/onboarding/presentation/bloc/onboarding_eve
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Hive
-  await LocalStorageService.init();
-
-  // Initialize Navigation Manager
-  NavigationManager.instance;
-
-  // Initialize dependency injection
-  await initializeDependencies();
-
+  await initApp();
   runApp(const SMEfinApp());
+}
+
+Future<void> initApp() async {
+  try {
+    await LocalStorageService.init();
+    await initializeDependencies();
+    await sl<NavigationManager>().init();
+  } catch (e, s) {
+    Log.error('Error initializing app: $e\n', stackTrace: s);
+    rethrow;
+  }
 }
 
 class SMEfinApp extends StatelessWidget {
@@ -39,11 +41,8 @@ class SMEfinApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        routerDelegate: NavigationManager.router.routerDelegate,
-        routeInformationParser: NavigationManager.router.routeInformationParser,
-        routeInformationProvider:
-            NavigationManager.router.routeInformationProvider,
-        scaffoldMessengerKey: sl.get<GlobalKey<ScaffoldMessengerState>>(),
+        routerConfig: sl<NavigationManager>().router,
+        scaffoldMessengerKey: sl<GlobalKey<ScaffoldMessengerState>>(),
       ),
     );
   }

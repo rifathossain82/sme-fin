@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sme_fin/src/core/core.dart';
 import 'package:sme_fin/src/core/network/network.dart';
 import 'package:sme_fin/src/core/services/local_storage_service.dart';
 import 'package:sme_fin/src/features/onboarding/data/data_sources/onboarding_local_data_source.dart';
@@ -19,13 +20,14 @@ final sl = GetIt.instance;
 /// Initialize dependency injection
 Future<void> initializeDependencies() async {
   // Core
+  sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton<ApiClient>(() => ApiClient());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
   sl.registerLazySingleton<ApiService>(
     () => ApiService(sl<ApiClient>().dio, sl<NetworkInfo>()),
   );
-  sl.registerLazySingleton(() => Connectivity());
   sl.registerLazySingleton(() => GlobalKey<ScaffoldMessengerState>());
+  sl.registerLazySingleton<NavigationManager>(() => NavigationManager());
   sl.registerLazySingleton(() => LocalStorageService());
 
   // Data sources

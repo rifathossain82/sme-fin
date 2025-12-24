@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:sme_fin/main.dart' as app;
-import 'package:sme_fin/src/core/core.dart';
 import 'package:sme_fin/src/core/services/local_storage_service.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('Complete onboarding flow with app restart', (WidgetTester tester) async {
-    // Initialize and clear storage
-    await LocalStorageService.init();
-
-    // Initialize Navigation Manager
-    NavigationManager.instance;
-
-    // Initialize dependency injection
-    await initializeDependencies();
+  testWidgets('Complete onboarding flow with app restart', (
+    WidgetTester tester,
+  ) async {
+    // Initialize app
+    await app.initApp();
 
     // Start app
     await tester.pumpWidget(const app.SMEfinApp());
@@ -76,12 +71,18 @@ void main() {
     expect(find.byType(MaterialApp), findsOneWidget);
 
     // Check if business data is visible anywhere
-    final hasBusinessData = find.textContaining('Test Business', findRichText: true).evaluate().isNotEmpty;
+    final hasBusinessData = find
+        .textContaining('Test Business', findRichText: true)
+        .evaluate()
+        .isNotEmpty;
     final hasTextFields = find.byType(TextFormField).evaluate().isNotEmpty;
 
     // Should have either restored data or form fields visible
-    expect(hasBusinessData || hasTextFields, isTrue,
-        reason: 'App should restore state after restart');
+    expect(
+      hasBusinessData || hasTextFields,
+      isTrue,
+      reason: 'App should restore state after restart',
+    );
 
     // Cleanup
     await LocalStorageService().closeAll();
